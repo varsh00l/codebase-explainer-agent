@@ -1,10 +1,12 @@
 package com.sonu.codebase_explainer.service;
+import com.sonu.codebase_explainer.model.GitFileResponse;
 import com.sonu.codebase_explainer.model.GitTreeResponse;
 import com.sonu.codebase_explainer.model.GitTreeItem;
 import com.sonu.codebase_explainer.model.RepoInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,5 +45,19 @@ public class GitHubService {
                 path.endsWith(".ts") || path.endsWith(".js") ||
                 path.endsWith(".go") || path.endsWith(".cpp") ||
                 path.endsWith(".c") || path.endsWith(".rs");
+    }
+    public String getFileContent(String owner, String repo, String path) {
+        GitFileResponse response = webClient.get()
+                .uri("/repos/{owner}/{repo}/contents/{path}",
+                        owner, repo, path)
+                .retrieve()
+                .bodyToMono(GitFileResponse.class)
+                .block();
+
+        byte[] decodedBytes = Base64.getDecoder()
+                .decode(response.getContent()
+                        .replaceAll("\\s", ""));
+
+        return new String(decodedBytes);
     }
 }

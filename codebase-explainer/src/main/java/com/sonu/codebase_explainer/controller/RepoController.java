@@ -30,4 +30,10 @@ public class RepoController {
                                     @RequestParam String branch) {
         return gitHubService.getRepoFileTree(owner, repo, branch);
     }
+    @GetMapping("/repos/{owner}/{repo}/contents")
+    public String getFileContent(@PathVariable String owner,
+                                 @PathVariable String repo,
+                                 @RequestParam String path) {
+        return gitHubService.getFileContent(owner, repo, path);
+    }
 }
