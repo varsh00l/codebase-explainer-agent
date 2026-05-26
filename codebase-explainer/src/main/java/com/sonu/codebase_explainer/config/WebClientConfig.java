@@ -9,6 +9,9 @@ public class WebClientConfig {
             return WebClient.builder()
                     .baseUrl("https://api.github.com")
                     .defaultHeader("Accept", "application/vnd.github.v3+json")
+                    .codecs(configurer -> configurer
+                    .defaultCodecs()
+                    .maxInMemorySize(10 * 1024 * 1024))
                     .build();
         }
     }

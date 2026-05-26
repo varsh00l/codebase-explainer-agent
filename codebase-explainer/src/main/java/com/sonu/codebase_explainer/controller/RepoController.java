@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.sonu.codebase_explainer.service.GitHubService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class RepoController {
@@ -21,4 +24,10 @@ public class RepoController {
         return gitHubService.getRepoInfo(owner, repo);
     }
 
+    @GetMapping("/repos/{owner}/{repo}/files")
+    public List<String> getFileTree(@PathVariable String owner,
+                                    @PathVariable String repo,
+                                    @RequestParam String branch) {
+        return gitHubService.getRepoFileTree(owner, repo, branch);
+    }
 }
