@@ -1,4 +1,5 @@
 package com.sonu.codebase_explainer.service;
+import com.sonu.codebase_explainer.model.RepoInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -10,11 +11,11 @@ public class GitHubService {
         this.webClient = gitHubWebClient;
     }
 
-    public String getRepoInfo(String owner, String repo) {
+    public RepoInfo getRepoInfo(String owner, String repo) {
         return webClient.get()
                 .uri("/repos/{owner}/{repo}", owner, repo)// path after the base URL.
                 .retrieve()
-                .bodyToMono(String.class)
+                .bodyToMono(RepoInfo.class)
                 .block();
     }
 }

@@ -1,6 +1,7 @@
 package com.sonu.codebase_explainer.controller;
 
 
+import com.sonu.codebase_explainer.model.RepoInfo;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.sonu.codebase_explainer.service.GitHubService;
@@ -15,8 +16,8 @@ public class RepoController {
     }
 
     @GetMapping("/repos/{owner}/{repo}")
-    public String getRepo(@PathVariable String owner,
-                          @PathVariable String repo) {
+    public RepoInfo getRepo(@PathVariable String owner,
+                            @PathVariable String repo) {
         return gitHubService.getRepoInfo(owner, repo);
     }
 
